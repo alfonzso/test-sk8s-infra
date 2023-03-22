@@ -34,11 +34,10 @@ spec:
   values:
     #   service:
     #     type: "NodePort"
-    # admissionWebhooks:
-    #   enabled: false
+    admissionWebhooks:
+      enabled: false
     controller:
       hostNetwork: true
-      # kind: DaemonSet
       watchIngressWithoutClass: true
       ingressClassResource:
         name: nginx
