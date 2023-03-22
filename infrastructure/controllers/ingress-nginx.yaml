@@ -37,6 +37,9 @@ spec:
     admissionWebhooks:
       enabled: false
     controller:
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
       hostNetwork: true
       watchIngressWithoutClass: true
       ingressClassResource:
