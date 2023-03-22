@@ -1,8 +1,4 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: mlb
+
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
