@@ -1,87 +1,41 @@
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-kind: Kustomization
-metadata:
-  name: infra-pre-configs
-  # name: metallb-pre-configs
-  namespace: flux-system
-spec:
-  interval: 15m
-  path: ./infrastructure/prerequisite_configs
-  prune: true # remove any elements later removed from the above path
-  timeout: 2m # if not set, this defaults to interval duration, which is 1h
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  validation: server
-  # healthChecks:
-  #   - apiVersion: apps/v1
-  #     kind: Deployment
-  #     name: metallb-controller
-  #     namespace: mlb
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: infra-controllers
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: infra-pre-configs
-  interval: 1h
-  retryInterval: 1m
-  timeout: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./infrastructure/controllers
-  prune: true
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: infra-configs
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: infra-controllers
-  interval: 1h
-  retryInterval: 1m
-  timeout: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./infrastructure/configs
-  prune: true
-  patches:
-    - patch: |
-        - op: replace
-          path: /spec/acme/server
-          value: https://acme-staging-v02.api.letsencrypt.org/directory
-      target:
-        kind: ClusterIssuer
-        name: letsencrypt
-
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 # kind: Kustomization
 # metadata:
-#   name: metallb-pool-and-advertisement
+#   name: infra-controllers
 #   namespace: flux-system
 # spec:
-#   interval: 15m
-#   dependsOn:
-#   - name: metallb-pre-configs
-#   path: ./infrastructure/configs
-#   prune: true # remove any elements later removed from the above path
-#   timeout: 2m # if not set, this defaults to interval duration, which is 1h
+#   interval: 1h
+#   retryInterval: 1m
+#   timeout: 5m
 #   sourceRef:
 #     kind: GitRepository
 #     name: flux-system
-#   validation: server
-#   healthChecks:
-#     - apiVersion: apps/v1
-#       kind: Deployment
-#       name: metallb-controller
-#       namespace: mlb
+#   path: ./infrastructure/controllers
+#   prune: true
+#   wait: true
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: infra-configs
+#   namespace: flux-system
+# spec:
+#   dependsOn:
+#     - name: infra-controllers
+#   interval: 1h
+#   retryInterval: 1m
+#   timeout: 5m
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   path: ./infrastructure/configs
+#   prune: true
+#   patches:
+#     - patch: |
+#         - op: replace
+#           path: /spec/acme/server
+#           value: https://acme-staging-v02.api.letsencrypt.org/directory
+#       target:
+#         kind: ClusterIssuer
+#         name: letsencrypt
