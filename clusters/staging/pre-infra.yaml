@@ -1,24 +1,8 @@
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-# kind: Kustomization
-# metadata:
-#   name: pre-infra
-#   namespace: flux-system
-# spec:
-#   interval: 1h
-#   retryInterval: 1m
-#   timeout: 5m
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   path: ./infrastructure/pre-release
-#   prune: true
-#   wait: true
-
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: mlb-releaser
+  name: prerequisites
   namespace: flux-system
 spec:
   interval: 1h
@@ -27,26 +11,24 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  # path: ./infrastructure/pre-release/release
-  path: ./infrastructure/pre-release/mlb/release
+  path: ./infrastructure/prerequisites/__releases
   prune: true
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: mlb-releaser-after
+  name: prerequisites-after
   namespace: flux-system
 spec:
   dependsOn:
-    - name: mlb-releaser
+    - name: prerequisites
   interval: 1h
   retryInterval: 1m
   timeout: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  # path: after-configs
-  path: ./infrastructure/pre-release/mlb/after-configs
+  path: ./infrastructure/prerequisites/__releases-after
   prune: true
   wait: true
