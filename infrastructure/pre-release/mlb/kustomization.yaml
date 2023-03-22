@@ -26,7 +26,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./after-configs
+  path: after-configs
   prune: true
 #   patches:
 #     - patch: |
