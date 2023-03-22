@@ -33,7 +33,7 @@ spec:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
       hosts:
-        - host: weave-gitops.local.net
+        - host: weave-gitops.smapp.vbox.lehel
           paths:
             - path: /
               pathType: ImplementationSpecific

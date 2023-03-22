@@ -12,7 +12,7 @@ spec:
   values:
     ingress:
       hosts:
-        - host: podinfo.local.net
+        - host: podinfo.smapp.vbox.lehel
           paths:
             - path: /
               pathType: ImplementationSpecific
