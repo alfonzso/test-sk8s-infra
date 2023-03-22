@@ -1,25 +1,43 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-metadata:
-  name: mlb-release
-  namespace: mlb
-resources:
-  - namespace.yaml
-  - values.yaml
-  - helm.yaml
-  # - after-configs
-# dependOn:
-#     - name: infra-controllers
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+# metadata:
+#   name: mlb-release
+#   namespace: mlb
+# resources:
+#   - namespace.yaml
+#   - values.yaml
+#   - helm.yaml
+#   # - after-configs
+# # dependOn:
+# #     - name: infra-controllers
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: mlb-release-after
+  name: mlb-releaser
+  namespace: mlb
+spec:
+  # dependsOn:
+  #   - name: mlb-release
+  interval: 1h
+  retryInterval: 1m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: release
+  prune: true
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: mlb-releaser-after
   namespace: mlb
 spec:
   dependsOn:
-    - name: mlb-release
+    - name: mlb-releaser
   interval: 1h
   retryInterval: 1m
   timeout: 5m
@@ -28,6 +46,7 @@ spec:
     name: flux-system
   path: after-configs
   prune: true
+
 #   patches:
 #     - patch: |
 #         - op: replace
