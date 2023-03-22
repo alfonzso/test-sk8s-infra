@@ -1,7 +1,38 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+metadata:
+  name: mlb-release
+  namespace: mlb
 resources:
   - namespace.yaml
-  - pre-configs
+  - values.yaml
   - helm.yaml
-  - after-configs
+  # - after-configs
+# dependOn:
+#     - name: infra-controllers
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: mlb-release-after
+  namespace: mlb
+spec:
+  dependsOn:
+    - name: mlb-release
+  interval: 1h
+  retryInterval: 1m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./after-configs
+  prune: true
+#   patches:
+#     - patch: |
+#         - op: replace
+#           path: /spec/acme/server
+#           value: https://acme-staging-v02.api.letsencrypt.org/directory
+#       target:
+#         kind: ClusterIssuer
+#         name: letsencrypt

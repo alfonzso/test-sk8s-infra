@@ -1,0 +1,48 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  creationTimestamp: "2023-03-22T17:03:01Z"
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 1
+  labels:
+    kustomize.toolkit.fluxcd.io/name: flux-system
+    kustomize.toolkit.fluxcd.io/namespace: flux-system
+    toolkit.fluxcd.io/tenant: sre-team
+  name: flux-system
+  namespace: flux-system
+  resourceVersion: "74270"
+  uid: d6b81365-6689-477a-a7d6-e2e44761957e
+spec:
+  gitImplementation: go-git
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: flux-system
+  timeout: 60s
+  url: ssh://git@github.com/alfonzso/test-sk8s-infra
+status:
+  artifact:
+    checksum: 41b795c4d6450879e72d94c2a3975fdfc8aa7380d754da1b8dc52432c267f532
+    digest: sha256:41b795c4d6450879e72d94c2a3975fdfc8aa7380d754da1b8dc52432c267f532
+    lastUpdateTime: "2023-03-22T17:10:22Z"
+    path: gitrepository/flux-system/flux-system/1653776a7bc7371f68b1417b335889bc1bb33416.tar.gz
+    revision: main@sha1:1653776a7bc7371f68b1417b335889bc1bb33416
+    size: 35110
+    url: http://source-controller.flux-system.svc.cluster.local./gitrepository/flux-system/flux-system/1653776a7bc7371f68b1417b335889bc1bb33416.tar.gz
+  conditions:
+  - lastTransitionTime: "2023-03-22T17:10:22Z"
+    message: stored artifact for revision 'main@sha1:1653776a7bc7371f68b1417b335889bc1bb33416'
+    observedGeneration: 1
+    reason: Succeeded
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2023-03-22T17:10:22Z"
+    message: stored artifact for revision 'main@sha1:1653776a7bc7371f68b1417b335889bc1bb33416'
+    observedGeneration: 1
+    reason: Succeeded
+    status: "True"
+    type: ArtifactInStorage
+  observedGeneration: 1
+  url: http://source-controller.flux-system.svc.cluster.local./gitrepository/flux-system/flux-system/latest.tar.gz
