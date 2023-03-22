@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metallb-helm-chart-value-overrides
+  namespace: mlb
+data:
+  values.yaml: |-
+    # this currently not used, its just an example
+    metal_lb_values: "https://github.com/metallb/metallb/blob/main/charts/metallb/values.yaml"
