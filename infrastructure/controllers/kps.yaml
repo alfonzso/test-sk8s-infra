@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kps
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: kps
+  namespace: monitoring
+spec:
+  interval: 24h
+  url: https://prometheus-community.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kps
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kps
+      version: "45.7.1 "
+      sourceRef:
+        kind: HelmRepository
+        name: kps
+        namespace: monitoring
+      interval: 12h
+  values:
+    alertmanager:
+      enabled: false
+    grafana:
+      enabled: true
+      adminPassword: jcDXOxM1Y3JfLanZNX6B5JibYS0vgcmMb5pvAmPG
+      deploymentStrategy:
+        type: Recreate
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      ingress:
+        # annotations:
+        #   cert-manager.io/cluster-issuer: letsencrypt-production
+        enabled: true
+        hosts:
+          - grafana.smapp.vbox.lehel
+        #   - grafana.cnwco.duckdns.org
+        # tls:
+        # - secretName: grafana-cnwco-duckdns-org-tls
+        #   hosts:
+        #     - grafana.cnwco.duckdns.org
+
+    prometheus:
+      prometheusSpec:
+        retention: 7d
+        retentionSize: 10GB
+
