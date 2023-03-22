@@ -26,6 +26,21 @@ spec:
       interval: 12h
   # https://github.com/weaveworks/weave-gitops/blob/main/charts/gitops-server/values.yaml
   values:
+    ingress:
+      enabled: true
+      # className: ""
+      # annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      hosts:
+        - host: weave-gitops.local.net
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      # tls: []
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
     resources:
       requests:
         cpu: 100m
