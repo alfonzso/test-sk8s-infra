@@ -23,7 +23,7 @@ spec:
   chart:
     spec:
       chart: kps
-      version: "45.7.1 "
+      version: "45.7.1"
       sourceRef:
         kind: HelmRepository
         name: kps
