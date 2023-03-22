@@ -34,8 +34,8 @@ spec:
   values:
     #   service:
     #     type: "NodePort"
-    admissionWebhooks:
-      enabled: false
+    # admissionWebhooks:
+    #   enabled: false
     controller:
       tolerations:
         - effect: NoSchedule
