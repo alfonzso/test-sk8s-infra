@@ -23,7 +23,7 @@ provisioner: rook-ceph.rbd.csi.ceph.com  # driver:namespace:operator
 parameters:
     # clusterID is the namespace where the rook cluster is running
     # If you change this namespace, also change the namespace below where the secret namespaces are defined
-    clusterID: rook-ceph # namespace:cluster
+    clusterID: storage # namespace:cluster
 
     # If you want to use erasure coded pool with RBD, you need to create
     # two pools. one erasure coded and one replicated.
