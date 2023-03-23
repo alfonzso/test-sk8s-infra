@@ -31,6 +31,9 @@ spec:
   releaseName: rookceph
   targetNamespace: storage
   values:
+    monitoring:
+      enabled: true
+    enableDiscoveryDaemon: true
     csi:
       kubeletDirPath: /var/lib/k0s/kubelet
 
